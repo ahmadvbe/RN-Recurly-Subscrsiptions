@@ -1,0 +1,229 @@
+
+
+
+
+# 4:40 JS talks directly to native code through JSI:
+'-modules load on demand instead of loading on startup'
+-the rendering layer syncs with react own update cycle
+# -react native 5:14 is a runtime but we ll build with expo
+ If ur re usued to next js with React or Next with Vue or Tanstack 
+ 
+# Expo is the framework layer on top of React Native
+    -it handles ur dev environment 
+    -ur routing
+    -ur build 
+    -ur deployments
+    - React Native gives u the engine 
+        And Expo gives u the car
+    -Expo is the official reocmmended way to build React Native apps 5:50
+    - u just run one command and u hve a working app on ur phone 
+
+# 6:30 Expo handles **native dependencies for you**
+        **camera, apps, notifications, biometrics**
+
+# 6:30 **File based routing**
+    - you create a file and it becomes a screen
+    - Nested Folders become Nested Routes
+    - Dynamic segments starts with []
+ 
+# 6:46 Expo will give you the easiest path from making** 
+    -the app run on ur phone all the way to making the app live on the appstore
+    =>that path is called **EAS Expo application Services**
+    Eas helps u ship ur app
+    **Eas build compiles ur app in the cloud**
+        No mac needed for ios builds
+        **EAS submit sends it to appstore or google paly with one cmd**
+        **EAS update lets you push fices directly to users devices without going to store review**
+        7:30 EAS workflow : auto build, sign and submit ur app directly from github repo
+        7:40 Expo observe to measure real users metrics like launch time and app responsiveness
+            =>with this u can fully automate ur release process abd track 
+                exactly how ur app performs for real users in production
+
+# 8:20 setting up same tools that companies use:**
+    -to auth users,track behaviors and catch bugs before ur users do
+
+# 8:50 CLERK for auth and billing**
+    -handles sign-up, in , user management and session handling
+    - 9:15 use of **Clerk Custom Offlow with Expo**            
+    -9:18 set up secure auth, amange user sessions and handle the entire experience
+    - Clerk just launched native components for EXPO
+    - essentially 9:30 pre built UI that renders using SWIFT UI on IOS and JETPACK COMPOSE on ANDROID
+    - 9:50 use of **CLERK for BILLING** learn how to set up subscription plans, manage payments and enforce plan limits
+        
+# 10:13 POSTHOG for analytics and exploration
+    - u need to know what ur users are actually doing 10:22 
+    - which screen do they visit
+    - we ll integarate the react native SDK and use it as a single tool for understanding user behavior
+    - we ll set up event tracking to see which subscriptions users add most
+    - 10:45 Funnel analyses ro measure how many users complete onboarding
+    - 10:48 feature flags to roll out nea feature to a % of users before going live
+    - Air tracking to catch crashes the moments they happen 10:55
+    - 11:00 session replay on mobile
+    - 11:08 if you want direct feedback u can trigger in app surveys after key moments
+
+# 11:27 CodeRabbit USE
+
+ALL IN ALL:
+# 12:38 EXPO and EAS handles ur Development and Deployment
+# Clerk Handles AUTH and Billing
+# POSTHOG ahndles analytics and experimentation
+# COdeRabbit handles code quality
+
+# 13:15 CRASH COURSE oF ReactNATIVE
+- 13:55 coding in RN u will use JS same as react
+- instead of rendering html elements u wll render native mobile components
+- 14:15 <Text> </> : dispaly text in the app 14:55
+- 15:00 StyleSheet utility : define styles by writing a single JS object
+- 15:10 tailwind css =>native wind allowing u to write taiwlind like css styles in RN
+- <View></> 15:30: box holding other components similar to <div></>
+  - often used to create layout structures for other components
+  - uses flexbox layout by default 15:56 making it rly easy to control how the childrenc components r laid out
+
+- Interactivity to ur RN apps 16:12
+  - A/ 16:25 Touchable Opacity : cousin to react button component
+    - instead of Onclick => ur pressing it
+  - B/ Touchable Highlight which allow views to respond to touch in a unique way
+    - when touched the component reduce the opacity of the wrapped div revealing the underlying color
+  - C/ Touchable without feedback 17:02 u dnt want to hve any visual feedback when pressed
+  - D/ Activity Indicator = >allowing u to show a spinner or a loading indicator within ur app
+  - E/ 17:48 Flatlist rendering a longList of items that need to be scrolled
+    - like the mapfuction in react
+    - some extra feature like Optimized Scroll performance and Item Separation 18:10
+      <View>
+        <FlatList
+            data={DATA}
+            renderItem= {({item})}=>{ //allowing u to define how u wana represent each item in the array
+            }
+            >
+        </FlatList>
+      </View>
+    - when should u use a flatlist or when should u map only over the elements 18:38
+        -LargerLISt =>Flatlist
+        -Smaller List=>mapList
+  
+  - F/ ScrollView 18:50 multiple components providing u a scorlling container for them
+
+  - G/ 19:20 SafeAreaView Safe Zone wo wrap ur apps content within without being covered by the device HW features
+    sometimes it fails 20:00 so => a package installed REACT NATIVE SAFE AREA CONTEXT
+
+ 
+  - H/ 20:25 Display images in RN
+    <Image > Component 
+        - Display an image as a background : 
+            <ImageBackground> : specifically designed to allow other components to be laid on top of it
+    Both of the above component dnt support SVG files bcs of some native rendering limitations
+    =>3rd party packet: React native SVG
+
+  - I/ Modals 21:25 <Modal>
+  - J/ Alert 21:41 <Alert> 21:47
+  - 21:55 Forms <Switch>
+                create a state for it
+                a func that manages it
+                call it withinh ur JSX, provide some colors, its value, what happens when u click on it
+
+  - 22:20 Status Bar
+
+
+
+  # 24:00 Project Setup
+
+  ## REACT NATIVE.dev 24:30
+  ## Expo.dev 25:10
+    26:30 Creating the project @expo.dev under ahmad.vbe@gmail.com A@1234
+    27:34 create expo app in ur visual studio terminal 
+        npx create-expo-app@latest --template default@sdk-54 ./
+    29:00 npx expo start to start the development server
+    29:20 open the app on ur phone by scanning the QR code with the expo
+
+  ## FILES generated: what has expo generated for us 31:18
+    - package.json
+    - 31:58 app.json : expos config files  
+    - 32:20 tsconfig.json : typescript config file, extends the expos base TS config
+    - 32:45 package-lock.json : npm lock file
+    - 32:50 node_modules
+    - 32:55 scripts folder
+    - 33:00 assets folder
+    - the real code lives in the app folder 33:10
+        containing all the different routes
+            rn-recurly-me/app/_layout.tsx : root layout wrapping all of ur screens
+            rn-recurly-me/app/(tabs)/index.tsx 33:33 1st thing users see 
+            rn-recurly-me/app/(tabs)/explore.tsx: Explore Page 33:40
+
+    - rn-recurly-me/components 33:45 all the components and reusable pieces of UI 34:05
+
+## 34:10 clean our project using one of the scripts within package.json
+    npm run resset-project 
+                    =>35:00 fully empty version of our app
+                    => Starting point 
+
+
+### Styling 35:24 SET UP Styling
+    - we will use Tailwind CSS for styling our app
+    - 35:40 NativeWind is a package that allows us to write Tailwind CSS styles in React Native
+    - 35:49 Nativewind.dev install native wind and its dependencies
+    - 36:20 install nativewind and its dependencies
+        Nativewind V5 : https://www.nativewind.dev/v5/getting-started/installation
+              npx expo install nativewind@preview react-native-css react-native-reanimated react-native-safe-area-context
+      2. Setup Tailwind CSS
+        npx tailwindcss init -pnpx expo install --dev tailwindcss @tailwindcss/postcss postcss
+        37:27 Add Tailwind to your PostCSS configuration
+        37:45 Create a global.css file and add the Tailwind directives.
+      3. Create or modify your metro.config.js 38:12
+
+
+    43:00 Theme for our app
+      Figma design => global.css
+
+
+# 45:20 Routing and Navigation of our APP
+  routing with expo router works as the routing with Next js 
+    every file in the app folder becomes a route/part of the nav tree 45:40
+    - app/index.tsx => / routeour root route isnt the full home screen
+      =>its an entry point hat decides where a user goes 
+        back in our app/index.tsx is the starting route
+        
+## 46:04 on boarding screen addition
+    app/onboarding.tsx. / rnfe =>spinup a new functional component with a view and a text component inside it
+    46:35 test it by adding a link to it from the index.tsx file
+
+## Route group 48:00
+  lets you organize ur routes without affecting the url structure /witout adding that folder name to URL
+    the following routes will resolve directly to app/sign-in and app/sign-up instead of app/(auth)/sign-in and app/(auth)/sign-up
+    48:30 app/(auth)
+      48:35 app/(auth)/sign-in.tsx 48:50 
+      49:05 app/(auth)/sign-up.tsx
+
+## 51:30 LAYOUTS
+  each layout adds its own header 51:50
+  root layout wraps all the routes
+  create a layout specifically for the auth group to wrap the sign-in and sign-up pages 52:00
+    app/(auth)/_layout.tsx
+  
+
+## Tabs 53:36 bottom tab navigation -- note that the auth screens dnt need the bottom navigationn -- ur main app screens will be within the
+    app/(tabs)
+      54:10  3 pages to be implemented
+            app/(tabs)/subscriptions.tsx
+            app/(tabs)/insights.tsx
+            app/(tabs)/settings.tsx
+      54:40 Not to forget the home screen *app/(tabs)/index.tsx*
+  
+## 55:30 Dynamic Routes 
+  so if you nee a subscription Details screen u dnt want the tab bar to be shown on the page
+    ==>we wana create it outside the tabs folder as a dynamic route 55:45
+      app/subscriptions/[id].tsx 56:25
+
+## COntent issue boundary 58:15
+  58:30 make sure to use a safe area view toc ontain all the content of the app to avoid any issues with the notches and the different screen sizes
+
+# 4 different types of navigation in our app:
+  - Stack Navigation : for the auth flow
+  - Tab Navigation : for the main app screens
+  - Drawer Navigation : for the settings screen
+  - Modal Navigation : for the subscription details screen
+# 4 CONCEPTS TO POWER THE ENTIRE NAV OF THIS APP 58:40 which is build direclty through folders and files
+  -FILES to create routes and it becomnes a screen
+  -ROUTE GROUPS to organize screens without chnaging the url and parentheses to keep things clean
+  -LAyout letting mutilple screens share the same nav parent 
+  -the bottom tabs nav allowing to move between pages
+  -the dynamic routes [] that let one file ahndle many detailed pages
