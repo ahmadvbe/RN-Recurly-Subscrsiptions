@@ -1,26 +1,25 @@
-import { Text, View, Pressable, Image } from 'react-native'
-import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
-import { styled } from "nativewind";
-import { useClerk, useUser } from '@clerk/expo';
 import images from '@/constants/images';
-import { usePostHog } from 'posthog-react-native';
+import { useClerk, useUser } from '@clerk/expo';
+import { styled } from "nativewind";
+import { Image, Pressable, Text, View } from 'react-native';
+import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 const SafeAreaView = styled(RNSafeAreaView);
 
 const Settings = () => {
     const { signOut } = useClerk();
     const { user } = useUser();
-    const posthog = usePostHog();
+    // const posthog = usePostHog();
 
     const handleSignOut = async () => {
-        posthog.capture('user_signed_out');
-        try {
-            await signOut();
-            // Only reset analytics after successful sign-out
-            posthog.reset();
-        } catch (error) {
-            console.error('Sign-out failed:', error);
-            // Don't reset analytics if sign-out failed
-        }
+        // posthog.capture('user_signed_out');
+        // try {
+        //     await signOut();
+        //     // Only reset analytics after successful sign-out
+        //     posthog.reset();
+        // } catch (error) {
+        //     console.error('Sign-out failed:', error);
+        //     // Don't reset analytics if sign-out failed
+        // }
     };
 
     const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';

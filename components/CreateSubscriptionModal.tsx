@@ -1,9 +1,9 @@
-import { View, Text, Modal, Pressable, TextInput, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import React, { useState } from 'react';
-import clsx from 'clsx';
 import { icons } from '@/constants/icons';
+import clsx from 'clsx';
 import dayjs from 'dayjs';
-import {posthog} from "@/src/config/posthog";
+import React, { useState } from 'react';
+import { KeyboardAvoidingView, Modal, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+// import {posthog} from "@/src/config/posthog";
 
 interface CreateSubscriptionModalProps {
   visible: boolean;
@@ -65,12 +65,12 @@ const CreateSubscriptionModal = ({ visible, onClose, onSubmit }: CreateSubscript
 
     onSubmit(newSubscription);
 
-    posthog.capture('subscription_created', {
-      subscription_name: name.trim(),
-      subscription_price: priceValue,
-      subscription_frequency: frequency,
-      subscription_category: category,
-    })
+    // posthog.capture('subscription_created', {
+    //   subscription_name: name.trim(),
+    //   subscription_price: priceValue,
+    //   subscription_frequency: frequency,
+    //   subscription_category: category,
+    // })
 
     resetForm();
     onClose();

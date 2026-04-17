@@ -3,22 +3,20 @@ import ListHeading from "@/components/ListHeading";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import { HOME_BALANCE } from "@/constants/data";
 import { icons } from "@/constants/icons";
-import images from "@/constants/images";
 import "@/global.css";
 import { useSubscriptionStore } from "@/lib/subscriptionStore";
 import { formatCurrency } from "@/lib/utils";
-import { useUser } from '@clerk/expo';
+// import { useUser } from '@clerk/expo';
 import dayjs from "dayjs";
 import { styled } from "nativewind";
-import { usePostHog } from 'posthog-react-native';
 import { useMemo, useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 const SafeAreaView = styled(RNSafeAreaView);
 
 export default function App() {
-    const { user } = useUser();
-    const posthog = usePostHog();
+    // const { user } = useUser();
+    // const posthog = usePostHog();
     const [expandedSubscriptionId, setExpandedSubscriptionId] = useState<string | null>(null);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const { subscriptions, addSubscription } = useSubscriptionStore();
@@ -37,10 +35,10 @@ export default function App() {
     const handleSubscriptionPress = (item: Subscription) => {
         const isExpanding = expandedSubscriptionId !== item.id;
         setExpandedSubscriptionId((currentId) => (currentId === item.id ? null : item.id));
-        posthog.capture(isExpanding ? 'subscription_expanded' : 'subscription_collapsed', {
-            subscription_name: item.name,
-            subscription_id: item.id,
-        });
+        // posthog.capture(isExpanding ? 'subscription_expanded' : 'subscription_collapsed', {
+        //     subscription_name: item.name,
+        //     subscription_id: item.id,
+        // });
     };
 
     // const handleCreateSubscription = (newSubscription: Subscription) => {
@@ -54,21 +52,23 @@ export default function App() {
     // };
 
     // Get user display name: firstName, fullName, or email
-    const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';
+    // const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';
 
     return (
-        <SafeAreaView className="flex-1 bg-background p-5">
+        <SafeAreaView  //1:20:30 so that the content doesnt cut off behin the nav bar --coming from "react-native-safe-area-context";
+        //we need to get the styled wrapper of SafeAreaView =>allowing you to use talwind classes on it 
+        className="flex-1 bg-background p-5">
                 <FlatList
                     ListHeaderComponent={() => (
                         <>
                             <View className="home-header">
-                                <View className="home-user">
+                                {/* <View className="home-user">
                                     <Image
                                         source={user?.imageUrl ? { uri: user.imageUrl } : images.avatar}
                                         className="home-avatar"
                                     />
                                     <Text className="home-user-name">{displayName}</Text>
-                                </View>
+                                </View> */}
 
                                 <Pressable onPress={() => setIsModalVisible(true)}>
                                     <Image source={icons.add} className="home-add-icon" />

@@ -1,14 +1,16 @@
 import { tabs } from "@/constants/data";
 import { colors, components } from '@/constants/theme';
-import { useAuth } from '@clerk/expo';
 import clsx from "clsx";
-import { Redirect, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { Image, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-const tabBar = components.tabBar;
+//   layout to be created specifically to the tabs group 1:03:50
+//     app/(tabs)/_layout.tsx
 
-const TabIcon = ({focused, icon}: TabIconProps) => {
+const tabBar = components.tabBar; //1:17:05 coming from theme.ts
+
+const TabIcon = ({focused, icon}: TabIconProps) => { //1:11:50
     return (
         <View className="tabs-icon">
             <View className={clsx('tabs-pill', focused && 'tabs-active')}>
@@ -17,28 +19,28 @@ const TabIcon = ({focused, icon}: TabIconProps) => {
         </View>
     );
 };
-const TabLayout = () => {
-        const { isSignedIn, isLoaded } = useAuth();
-        const insets = useSafeAreaInsets();
+const TabLayout = () => { //1:04:00
+        // const { isSignedIn, isLoaded } = useAuth();
+        const insets = useSafeAreaInsets(); //1:15:55
 
         // Wait for auth to load before rendering anything
-        if (!isLoaded) {
-            return null;
-        }
+        // if (!isLoaded) {
+        //     return null;
+        // }
 
         // Redirect to sign-in if user is not authenticated
-        if (!isSignedIn) {
-            return <Redirect href="/(auth)/sign-in" />;
-        }
+        // if (!isSignedIn) {
+        //     return <Redirect href="/(auth)/sign-in" />;
+        // }
 
         return (
-            <Tabs
-                screenOptions={{
+            <Tabs //1:04:05 coming from expo router 
+                screenOptions={{ 
                         headerShown: false,
-                        tabBarShowLabel: false,
+                        tabBarShowLabel: false, //1:14:55
                         tabBarStyle: {
                                 position: 'absolute',
-                                bottom: Math.max(insets.bottom, tabBar.horizontalInset),
+                                bottom: Math.max(insets.bottom, tabBar.horizontalInset), //1:17:28
                                 height: tabBar.height,
                                 marginHorizontal: tabBar.horizontalInset,
                                 borderRadius: tabBar.radius,
@@ -46,23 +48,23 @@ const TabLayout = () => {
                                 borderTopWidth: 0,
                                 elevation: 0,
                         },
-                        tabBarItemStyle: {
+                        tabBarItemStyle: { //1:18:50
                                 paddingVertical: tabBar.height / 2 - tabBar.iconFrame / 1.6
                         },
-                        tabBarIconStyle: {
+                        tabBarIconStyle: { //1:19:05
                                 width: tabBar.iconFrame,
                                 height: tabBar.iconFrame,
                                 alignItems: 'center'
                         }
             }}
             >
-                    {tabs.map((tab) => (
-                        <Tabs.Screen
+                    {tabs.map((tab) => ( //1:11:00
+                        <Tabs.Screen //1:04:45 display our screen
                             key={tab.name}
                             name={tab.name}
                             options={{
                                     title: tab.title,
-                                    tabBarIcon: ({focused}) => (
+                                    tabBarIcon: ({focused}) => ( //1:13:38
                                         <TabIcon focused={focused} icon={tab.icon} />
                                     )
                             }}/>
