@@ -1,3 +1,5 @@
+ //1:16:35 theme.ts
+
 export const colors = {
     background: "#fff9e3",
     foreground: "#081126",

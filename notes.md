@@ -227,3 +227,47 @@ ALL IN ALL:
   -LAyout letting mutilple screens share the same nav parent 
   -the bottom tabs nav allowing to move between pages
   -the dynamic routes [] that let one file ahndle many detailed pages
+
+# 59:50 GITHUB 
+
+# 1:02:00 CODERABBIT
+
+# 1:03:30 Connect with a bottom Tab Navigation
+  just like we define the root stack inside the layout.tsx
+  layout to be created specifically to the tabs group 1:03:50
+    app/(tabs)/_layout.tsx
+      <Tabs> 
+        <Tabs.Screen> for each screen in the tab navigation
+          and we hve a tabs arrray that has the name of the screen and the icon to be shown in the tab bar
+
+# 1:07:40 ASSETS IMPORT
+# 1:08:00 Folder to use the ASSETS
+      constants/icons.ts 1:08:20
+      1:08:46 by default TS doesnt know how to handle image imports so we need to declare a module for it in a declaration file
+          => image.d.ts 1:09:00  
+             type.d.ts
+             1:09:29  constants/data.ts
+                  1:09:40 where we ll export the tabs array that we will use to render the tab navigation and the subscription data that we will use to render the subscriptions page
+
+# Modiy the Style of our TAB BAR 1:10:30 CLSX
+       npm i clsx :allowing us to join diff classes together conditionally
+       1:10:46 update the app/(tabs)/_layout.tsx
+          map over the tabs
+        1:15:36 use of useSafeAreaInsets from react-native-safe-area-context
+        1:16:35 theme.ts
+        1:20:20 Finally Implmented the floading bar navigation
+
+        *1:20:25 safe AREA VIEW in order so that the content doesnt cut off*
+                  app/(tabs)/index.tsx
+                1:22:09 APlly the same pattern to all the different pages:
+                  -insight.tsx
+                  -settings.tsx 1:22:30
+                  -subscriptions.tsx 1:22:50
+
+ ## RECAP
+      We have now 1:23:05 the home page with some navigation
+      the onboarding and the 2 auth screens havent been setup properly
+      We Defined our screens as files then configured them through the data array
+      then import and map over them and define the styles directly within the tabs component 
+      
+# 1:24:05 PUSH TO A GITHUB BRANCH
