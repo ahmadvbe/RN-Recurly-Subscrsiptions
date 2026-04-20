@@ -1,7 +1,8 @@
 import { tabs } from "@/constants/data";
 import { colors, components } from '@/constants/theme';
+import { useAuth } from '@clerk/expo';
 import clsx from "clsx";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 import { Image, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -20,18 +21,27 @@ const TabIcon = ({focused, icon}: TabIconProps) => { //1:11:50
     );
 };
 const TabLayout = () => { //1:04:00
-        // const { isSignedIn, isLoaded } = useAuth();
+
+    // 4-Protect the Home Routes by checking the user's authentication state and redirecting unauthenticated users
+    //  to the sign-in page, ensuring that only authenticated users can access the main content of the app. 2:35:40
+    //#### app/(tabs)/_layout.tsx : protect home routes with auth check
+            //       NAVIGATION LOGIC USING useAuth Hook to check whether the user is signed in and whether evg is loaded 2:40:10
+            //   this check lives in the layout not within the invidual screen, 
+            //     =>that way every screen inside of the tabs group is automatically protected
+        const { isSignedIn, isLoaded } = useAuth();
+
+
         const insets = useSafeAreaInsets(); //1:15:55
 
         // Wait for auth to load before rendering anything
-        // if (!isLoaded) {
-        //     return null;
-        // }
+        if (!isLoaded) {
+            return null;
+        }
 
         // Redirect to sign-in if user is not authenticated
-        // if (!isSignedIn) {
-        //     return <Redirect href="/(auth)/sign-in" />;
-        // }
+        if (!isSignedIn) {
+            return <Redirect href="/(auth)/sign-in" />;
+        }
 
         return (
             <Tabs //1:04:05 coming from expo router 
