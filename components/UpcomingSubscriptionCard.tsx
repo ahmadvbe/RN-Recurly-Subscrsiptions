@@ -1,8 +1,11 @@
-import {View, Text, Image} from 'react-native'
-import React from 'react'
-import {formatCurrency} from "@/lib/utils";
+import { formatCurrency } from "@/lib/utils";
+import React from 'react';
+import { Image, Text, View } from 'react-native';
 
-const UpcomingSubscriptionCard = ({ name, price, daysLeft, icon, currency }: UpcomingSubscription) => {
+//1:49:11 components/UpcomingSubscriptionCard.tsx
+//1:52:20
+const UpcomingSubscriptionCard = ({ name, price, daysLeft, icon, currency }:
+     UpcomingSubscription) => {
     return (
         <View className="upcoming-card">
             <View className="upcoming-row">
@@ -15,7 +18,9 @@ const UpcomingSubscriptionCard = ({ name, price, daysLeft, icon, currency }: Upc
                 </View>
             </View>
 
-            <Text className="upcoming-name" numberOfLines={1}>{name}</Text>
+            <Text className="upcoming-name" 
+                    numberOfLines={1}>
+                        {name}</Text>
         </View>
     )
 }
