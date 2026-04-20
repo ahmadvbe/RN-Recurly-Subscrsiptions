@@ -40,7 +40,13 @@ function RootLayoutContent() {
     }
   }, [pathname, params]);
 
-  const [fontsLoaded] = useFonts({
+
+    // app.json =>add the expo font pluggin to the plugins array 1:29:30
+    //   1:30:50 app/_layout.tsx =>load the fonts before any screen renders as we need to keep the splash screen visible until the fonts are loaded to avoid any flash of unstyled text
+        //array desctructuring to load multiple font variants at once
+        //RECAP @1:32:45
+  const [fontsLoaded] = useFonts({ //where keys are the name of the fonts to use and the values are the require statements pointing to the font files
+    //return of a boolean variable teleling u whether the fonts are finished loading or nt
     'sans-regular': require('../assets/fonts/PlusJakartaSans-Regular.ttf'),
     'sans-bold': require('../assets/fonts/PlusJakartaSans-Bold.ttf'),
     'sans-medium': require('../assets/fonts/PlusJakartaSans-Medium.ttf'),
@@ -48,16 +54,18 @@ function RootLayoutContent() {
     'sans-extrabold': require('../assets/fonts/PlusJakartaSans-ExtraBold.ttf'),
     'sans-light': require('../assets/fonts/PlusJakartaSans-Light.ttf')
   })
-
-  useEffect(() => {
-    // Hide splash only when both fonts and auth are loaded
-    if (fontsLoaded && authLoaded) {
+    //1:32:00 related to the fontsLoaded state variable =>we use the useEffect hook to monitor the loading state of the fonts and the authentication status. We only hide the splash screen when both the fonts are loaded and the authentication status is determined (authLoaded is true). This ensures that users won't see any unstyled text or experience a flash of content before everything is ready.
+    //the useEffect watches for the loading Process by watching the boolean returned by the useFonts hook 
+    // and the authLoaded state from useAuth. Once both are true, it calls SplashScreen.hideAsync() to hide the splash screen and show the app content. If either fonts are still loading or auth status is not yet determined, it keeps the splash screen visible by returning null, preventing any part of the app from rendering until everything is ready. This provides a smooth user experience without flashes of unstyled content or premature rendering.
+    useEffect(() => {
+   
+    if (fontsLoaded && authLoaded) { // ===> Hide splash only when both fonts and auth are loaded
       SplashScreen.hideAsync()
     }
-  }, [fontsLoaded, authLoaded])
+  }, [fontsLoaded, authLoaded])//==>retrigger this in these cases
 
   // Don't render app until both are ready
-  if (!fontsLoaded || !authLoaded) return null;
+  if (!fontsLoaded || !authLoaded) return null; //1:32:30 if fonts dont load at all =>we cannot show our app without them being loaded
 
   return <Stack screenOptions={{ headerShown: false }} />;
 }

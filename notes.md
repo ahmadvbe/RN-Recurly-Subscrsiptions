@@ -269,5 +269,81 @@ ALL IN ALL:
       the onboarding and the 2 auth screens havent been setup properly
       We Defined our screens as files then configured them through the data array
       then import and map over them and define the styles directly within the tabs component 
-      
+
 # 1:24:05 PUSH TO A GITHUB BRANCH
+  git checkout -b dev
+  git add .
+  git commit -m "feat: project setup, nativewind, routing, tab nav"
+  git push -u origin dev
+  CodeRabbit to the rescue 1:25:00
+
+# 1:28:00 TYPOGRAPHY/FONTS
+  - we will use expo font to load custom fonts into our app
+  - we will use the Inter font family from Google Fonts
+  - we will define a custom hook to load the fonts and return a boolean indicating whether the fonts have finished loading or not==>U need to explicitely load the FONTS into ur app before using them
+  - app.json =>add the expo font pluggin to the plugins array 1:29:30
+      1:30:50 app/_layout.tsx =>load the fonts before any screen renders as we need to keep the splash screen visible until the fonts are loaded to avoid any flash of unstyled text
+##       FONTS PROCESS RECAP @1:32:45
+        1st step use Fonthook @app/_layout.tsx
+        2nd Step useEffect : watching the useFont Hook and acting accordingly 
+        3rd step 1:33:15 sync this with Tailwind
+               global.css : attach eah of the fonts to a specific classname 1:33:45
+               so if u write a classNAme font-sans-bold in ur jsk => Native winfd will auto resolve it to sans bold family which points to the relative file 1:34:00 
+
+
+  # Home UI implmenetation 1:36:10
+    IT will have a:
+      -Header
+      -A Balance Card
+      -Upcoming(Horizontal Scroll)
+      -All Subsciptions (Vertical Scroll) with expandable details cards
+
+  ## need for lightweigbnt day library 1:37:25
+    npm i dayjs
+  
+  Need for an updated constants data tabs
+  
+  1:38:24 make sure that within. type.d.ts we export the type for the subscription data to be used across the app and to ensure type safety when working with the subscription data 1:38:24
+
+  1:38:52 constants/images.ts: Centralize the image imports
+
+  1:39:40 need for a currency formatting Function
+      we re dealing with $ amounts 
+      1:40:20 ASK Junie. ==>lib/utils.ts
+
+  1:41:35 Implement the Home UI
+    - Header with a welcome message and a profile picture
+    - Balance Card showing the current balance and a button to add funds
+    - Upcoming Subscriptions section with a horizontal scroll of subscription cards
+    - All Subscriptions section with a vertical list of all subscriptions, each with expandable details cards to show more information about the subscription when clicked
+
+  ## Header 1:41:40  
+       app/(tabs)/index.tsx
+  ## 1:48:00 Horizontal Scrolling list of upcoming subscriptions
+       Reusable componets: List Heading and CARDS
+
+  ### 1:48:45   components/ListHeading.tsx
+       1:49:11 components/UpcomingSubscriptionCard.tsx
+
+  ### 1:58:25  components/SubscriptionCard.tsx
+    each card is tappable which extends the cards to show details like payment methood, catgeory , start date, renewal date and status of the subscription
+    tthen tapping it collapses it 
+        lib/utils.ts : helper funcs
+    1:59:00 components/SubscriptionCard.tsx
+      -import it to the home page
+      -feed it with the subscription data to render the list of subscriptions on the home page 2:01:35
+      - so that we put the pressable into action we will place it into out app/(tabs)/index.tsx and assign a state for it expandedSubscriptionId 2:06:05
+      -Back to components/SubscriptionCard.tsx 2:07:35 only true if expanded
+
+  #### 2:11:40 Turn the Subsciption card into a LIST =>rendering it within the FlastList @ app/(tabs)/index.tsx
+  #### Scroll issue 2:13:50 
+    nothing scrolls by default on mobile
+    the flatlist handles its own content but everything above it isnt part of that scroll
+    =>u hve to clean=> u hve to move all the content above the flat list into the flat list header component 
+    we will take avg in the home page ( all the other views ) and we will add them as the list header component to the flat list  2:15:15
+    ==> now the whole thing is actually scrollable 2:15:33
+  2:15:40 additional Modifications
+  2:16:35  Vertical Parent Horizental Child means no conflict
+
+  ### 2:17:09 End of Lesson Recap
+  ### 2:17:29 commit and push 
