@@ -347,3 +347,76 @@ ALL IN ALL:
 
   ### 2:17:09 End of Lesson Recap
   ### 2:17:29 commit and push 
+    push over to the dev branch 
+   #### 2:18:00 CODE RABBIT
+        2:18:55 Possible Related Issue
+        2:19:36 Missing SplashScreen.AutoHideAsync()
+        2:20:45 Touchable opacity is rendered without an onpress prop
+
+# 2:24:15 CLERK SETUP
+  authentication layer
+    -clerk handle auth for both web apps and mobile apps 2:24:45
+    - u need sign-up and,sign-in session management accross app restarts , email verification , secure token storage on the device , social login providers,
+      password reset flows and device trust 2:25:10
+        clerk HANdles evg, u integrate their SDK
+    - https://dashboard.clerk.com/apps/app_3CdHBxvCB0kgplq1YRgFMoIw03P/instances/ins_3CdHBvTJLmNmCmvXaqRO8ZrlB2F
+
+    EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_cG9zaXRpdmUtaGFtc3Rlci04My5jbGVyay5hY2NvdW50cy5kZXYk
+    ==> add this to the .env file to make it available in our app.  2:26:40
+
+    https://dashboard.clerk.com/apps/app_3CdHBxvCB0kgplq1YRgFMoIw03P/instances/ins_3CdHBvTJLmNmCmvXaqRO8ZrlB2F/user-authentication/user-and-authentication
+    =>once a user signs up they ll get a notification code sent to their email 2:27:00
+    no need to build seperate email sending or verification logic
+
+    2:27:25 CLerk Native components for expo
+      AUTH native looks on ur phone
+
+   ## RECAP clerk setup : 2:28:25
+      -account created
+      -application configured
+      -API key in ur envs 
+
+   ## 2:28:47 Actually integrate it into the APP
+    -install packages
+    -wrap the app with providers
+    -create 2 forms of validations
+    -calls specific SDK methods
+    -handles nav based on auth state
+  2:30:45 https://clerk.com/docs/expo/getting-started/quickstart#set-your-clerk-api-keys
+      clerk-copy as markdown.md 2:30:45 entire documentation document
+      opne ur JUNIE/CLAUDE
+    2:33:50 Spec Driven Development
+
+   ### 2:34:20 STEPS
+      1-Update the root layout to wrap the app with the ClerkProvider and pass in the publishable key from the environment variables, allowing us to use Clerk's authentication features throughout our app. 2:34:50
+      2-Create the Auth layout  to wrap the sign-in and sign-up screens, providing a consistent layout for all authentication-related pages. 2:35:10
+      3-Build Sign-in and Sign-up screens using Clerk's pre-built UI components, ensuring a secure and seamless authentication experience for users. 2:35:20
+      4-Protect the Home Routes by checking the user's authentication state and redirecting unauthenticated users to the sign-in page, ensuring that only authenticated users can access the main content of the app. 2:35:40
+      5-Update the Home Screen
+      6-Add some Type Definitions
+    Files to Be modified: 
+  #### 1-app/_layout.tsx : update root layout with clerk provider
+             <ClerkProvider :wrap our entire app.  //2:39:30
+                tokenCache={tokenCache}  //==>which uses the expo secure store which encrypts the session token on the device
+                                         //when a user closes and reopens the app they stays logged in without re authenticating
+  #### 2-app/(auth)/_layout.tsx : create auth layout with redirect logic 
+                
+  #### 3-app/(auth)/sign-in.tsx : build protection grade sign-in screen 2:40:40
+  #### 3-app/(auth)/sign-up.tsx : build protection grade sign-up screen 2:41:40
+  #### app/(tabs)/_layout.tsx : protect home routes with auth check 2:40:00
+              NAVIGATION LOGIC USING useAuth Hook to check whether the user is signed in and whether evg is loaded 2:40:10
+              this check lives in the layout not within the invidual screen, 
+                =>that way every screen inside of the tabs group is automatically protected
+  #### 5-app/(tabs)/index.tsx : update home screen with user data
+  #### 6-type.d.ts: add auth related TS types
+
+  #### Clerk Dashboard/USERS info upon users sign in 2:38:02
+        https://dashboard.clerk.com/apps/app_3CdHBxvCB0kgplq1YRgFMoIw03P/instances/ins_3CdHBvTJLmNmCmvXaqRO8ZrlB2F/users?users_hiddenColumns=username,phone_number
+        users info are all managed by CLERK 2:38:18
+
+
+#### Logout button 2:42:20 
+    @ app/(tabs)/settings.tsx
+
+  ## RECAP 2:43:25
+  ## 2:45:00 COdeRabbit use

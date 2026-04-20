@@ -2,22 +2,33 @@ import CreateSubscriptionModal from "@/components/CreateSubscriptionModal";
 import ListHeading from "@/components/ListHeading";
 import SubscriptionCard from "@/components/SubscriptionCard";
 import UpcomingSubscriptionCard from "@/components/UpcomingSubscriptionCard";
-import { HOME_BALANCE, HOME_USER, UPCOMING_SUBSCRIPTIONS } from "@/constants/data";
+import { HOME_BALANCE, UPCOMING_SUBSCRIPTIONS } from "@/constants/data";
 import { icons } from "@/constants/icons";
 import images from "@/constants/images";
 import "@/global.css";
 import { useSubscriptionStore } from "@/lib/subscriptionStore";
 import { formatCurrency } from "@/lib/utils";
-// import { useUser } from '@clerk/expo';
+
 import dayjs from "dayjs";
 import { styled } from "nativewind";
 import { useMemo, useState } from "react";
 import { FlatList, Image, Pressable, Text, View } from "react-native";
 import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
+
+//5-app/(tabs)/index.tsx : update home screen with user data
+import { useUser } from '@clerk/expo';
+
+
 const SafeAreaView = styled(RNSafeAreaView);
 
+
+
 export default function App() {
-    // const { user } = useUser();
+  
+    //  #### 5-app/(tabs)/index.tsx : update home screen with user data
+    const { user } = useUser();
+
+
     // const posthog = usePostHog();
 
          //2:06:05 so that we put the pressable into action we will place it into out app/(tabs)/index.tsx and assign a state for it expandedSubscriptionId 2:06:05
@@ -57,7 +68,7 @@ export default function App() {
     // };
 
     // Get user display name: firstName, fullName, or email
-    // const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';
+    const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';
 
     return (
         <SafeAreaView  //1:20:30 so that the content doesnt cut off behin the nav bar --coming from "react-native-safe-area-context";
@@ -71,19 +82,20 @@ export default function App() {
                                 <View className="home-user">
                                     <Image
                                         source={
-                                                //user?.imageUrl ? { uri: user.imageUrl } : 
-                                                images.avatar}
+                                                user?.imageUrl ? { uri: user.imageUrl } :  images.avatar
+                                            }
                                         className="home-avatar"
                                     />
                                     <Text 
                                         className="home-user-name">
-                                            {/* {displayName} */}
-                                            {HOME_USER.name}
+                                            {displayName}
+                                            {/* {HOME_USER.name} */}
                                             </Text>
                                 </View>
 
                                 <Pressable 
-                                        onPress={() => setIsModalVisible(true)}>
+                                        onPress={() =>  
+                                                         setIsModalVisible(true)}>
                                     <Image  //1:45:00
                                         source={icons.add} 
                                         className="home-add-icon" />

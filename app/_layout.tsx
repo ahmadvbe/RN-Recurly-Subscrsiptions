@@ -1,19 +1,23 @@
 import '@/global.css';
+
+//2:39:10   #### 1-app/_layout.tsx : update root layout with clerk provider
+// and pass in the publishable key from the environment variables, allowing us to use Clerk's authentication features throughout our app. 2:34:50
 import { ClerkProvider, useAuth } from '@clerk/expo';
 import { tokenCache } from '@clerk/expo/token-cache';
+
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useGlobalSearchParams, usePathname } from "expo-router";
-import { PostHogProvider } from 'posthog-react-native';
 import { useEffect, useRef } from "react";
 import { posthog } from '../src/config/posthog';
 
+// 2:19:36 CODERABBIT fix : Missing SplashScreen.AutoHideAsync() 
 SplashScreen.preventAutoHideAsync();
 
+//2:39:10   #### 1-app/_layout.tsx : update root layout with clerk provider
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
-
-// if (!publishableKey) {
-//   throw new Error('Add your Clerk Publishable Key to the .env file');
-// }
+if (!publishableKey) {
+  throw new Error('Add your Clerk Publishable Key to the .env file');
+}
 
 function RootLayoutContent() {
   const { isLoaded: authLoaded } = useAuth();
@@ -72,20 +76,22 @@ function RootLayoutContent() {
 
 export default function RootLayout() {
   return (
-    <PostHogProvider
-      client={posthog}
-      autocapture={{
-        captureScreens: false,
-        captureTouches: true,
-        propsToCapture: ['testID'],
-      }}
-    >
-      <ClerkProvider 
+    // <PostHogProvider
+    //   client={posthog}
+    //   autocapture={{
+    //     captureScreens: false,
+    //     captureTouches: true,
+    //     propsToCapture: ['testID'],
+    //   }}
+    // >
+      <ClerkProvider //2:39:10   #### 1-app/_layout.tsx : update root layout with clerk provider 
+                                      //wrapping our entire app
             publishableKey={publishableKey} 
-            tokenCache={tokenCache}
+            tokenCache={tokenCache}  //==>which uses the expo secure store which encrypts the session token on the device
+            //when a user closes and reopens the app they stays logged in without re authenticating
             >
         <RootLayoutContent />
       </ClerkProvider>
-    </PostHogProvider>
+    // </PostHogProvider>
   );
 }
