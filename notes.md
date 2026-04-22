@@ -419,4 +419,57 @@ ALL IN ALL:
     @ app/(tabs)/settings.tsx
 
   ## RECAP 2:43:25
-  ## 2:45:00 COdeRabbit use
+  ## 2:45:00 Commit to github and CodeRabbit use
+           2:46:29 SEQUENCE DIAGRAM 
+           Codde Rabbit Suggestions:
+            -2:47:50 remove the exposed clerk Publishable Key =>we should add the .env to the .gitignore
+            2:49:00 API keys
+                    https://dashboard.clerk.com/apps/app_3CdHBxvCB0kgplq1YRgFMoIw03P/instances/ins_3CdHBvTJLmNmCmvXaqRO8ZrlB2F/api-keys
+                    replace the publishable key @ our .env 
+            2:49:20 CodeRabbit fix: Move the Clerk Provider outisde the font gate tom enable parallel loading of fonts and auth
+                PROMPT WITH JUNIE THE AI AGENT
+
+            2:51:00 CodeRabbit if its an empty password 
+            2:51:50 window.location.href issue: use this window only if we re rendering on the web 
+        2:53:00 Push the changes
+
+
+# POSTHOG 2:53:40 === ANALYTICS
+    *Reviews/Tracking of ACTIVITY*
+  WE VE GOT AUTH WORKING, USERS CAN SIGN UP, SIGN -IN AND NAVIGATE THE APP
+  But we have 0 visibility of wt they actually do once they r inside
+    whihc screens do they visit most
+    how many users do they complete the sign up but they never come back
+   * without ANALYTICS , u just guessing *
+    <!-- POSTHOG CREDENTIALS:
+           fouad.vbe@gmail.com
+           A@313654 -->
+    2:55:25 POSTHOG automatic installation using the wizard
+             npx -y @posthog/wizard@latest
+             2:58:38 wizard install the posthog MCP SERVER
+              lets ur AI coding tools query the posthog data directly for example u can ask him which screen has the higher drop offs 2:58:45
+                   2:59:20     Events added:
+                                    • user_signed_in User successfully signs in with email and password
+                                    • user_sign_in_failed User sign-in attempt failed due to an error
+                                    • user_signed_up User successfully completes registration and verifies email
+                                    • user_sign_up_failed User sign-up attempt failed due to an error
+                                    • user_signed_out User signs out from settings screen
+                                    • subscription_created User creates a new subscription via the modal
+                                    • subscription_expanded User expands a subscription card on the home screen
+                                    • subscription_collapsed User collapses an expanded subscription card on the home screen
+                                    • subscription_details_viewed User navigates to the subscription details screen
+
+            3:00:20 npx expo install posthog-react-native 
+
+
+            posthog implementation @
+                PostHogProvider@ /rn-recurly-me/app/_layout.tsx
+                import { posthog } from '@/src/config/posthog' @ sign-in and sign-up app/(tabs)/index.tsx
+                HEATMAPS allowing you to see where peoaple are scrolling over 3:01:50
+                  homes/quickstart/ingest your first event
+                LOG CAPTURE: https://us.posthog.com/project/391419/settings/project-autocapture#selectedSetting=replay-log-capture&setting=replay-log-capture
+                Web Vitals
+                Session Replay 3:01:55 :  https://us.posthog.com/project/391419/replay/settings
+                3:03:45 Activities: https://us.posthog.com/project/391419/activity/explore
+
+# 3:05:00 GIT COMMIT

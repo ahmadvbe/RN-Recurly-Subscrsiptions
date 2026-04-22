@@ -18,6 +18,9 @@ import { SafeAreaView as RNSafeAreaView } from "react-native-safe-area-context";
 //5-app/(tabs)/index.tsx : update home screen with user data
 import { useUser } from '@clerk/expo';
 
+//2:55:25 POSTHOG automatic installation using the wizard
+import { posthog } from '@/src/config/posthog';
+
 
 const SafeAreaView = styled(RNSafeAreaView);
 
@@ -27,9 +30,6 @@ export default function App() {
   
     //  #### 5-app/(tabs)/index.tsx : update home screen with user data
     const { user } = useUser();
-
-
-    // const posthog = usePostHog();
 
          //2:06:05 so that we put the pressable into action we will place it into out app/(tabs)/index.tsx and assign a state for it expandedSubscriptionId 2:06:05
     const [expandedSubscriptionId, setExpandedSubscriptionId] = useState<string | null>(null); 
@@ -51,21 +51,11 @@ export default function App() {
     const handleSubscriptionPress = (item: Subscription) => { //2:06:55
         const isExpanding = expandedSubscriptionId !== item.id;
         setExpandedSubscriptionId((currentId) => (currentId === item.id ? null : item.id));
-        // posthog.capture(isExpanding ? 'subscription_expanded' : 'subscription_collapsed', {
-        //     subscription_name: item.name,
-        //     subscription_id: item.id,
-        // });
+        posthog.capture(isExpanding ? 'subscription_expanded' : 'subscription_collapsed', {
+            subscription_name: item.name,
+            subscription_id: item.id,
+        });
     };
-
-    // const handleCreateSubscription = (newSubscription: Subscription) => {
-    //     addSubscription(newSubscription);
-    //     posthog.capture('subscription_created', {
-    //         subscription_name: newSubscription.name,
-    //         subscription_price: newSubscription.price,
-    //         subscription_frequency: newSubscription.frequency,
-    //         subscription_category: newSubscription.category,
-    //     });
-    // };
 
     // Get user display name: firstName, fullName, or email
     const displayName = user?.firstName || user?.fullName || user?.emailAddresses[0]?.emailAddress || 'User';

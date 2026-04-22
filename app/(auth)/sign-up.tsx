@@ -5,6 +5,9 @@ import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import { SafeAreaView as RNSafeAreaView } from 'react-native-safe-area-context';
 
+//2:55:25 POSTHOG automatic installation using the wizard
+import { posthog } from '@/src/config/posthog';
+
 //  #### 3-app/(auth)/sign-up.tsx : build protection grade sign-in screen
 
 const SafeAreaView = styled(RNSafeAreaView);
@@ -13,7 +16,6 @@ const SignUp = () => {
     const { signUp, errors, fetchStatus } = useSignUp();
     const { isSignedIn } = useAuth();
     const router = useRouter();
-    // const posthog = usePostHog();
 
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
@@ -38,9 +40,9 @@ const SignUp = () => {
 
         if (error) {
             console.error(JSON.stringify(error, null, 2));
-            // posthog.capture('user_sign_up_failed', {
-            //     error_message: error.message,
-            // });
+            posthog.capture('user_sign_up_failed', {
+                error_message: error.message,
+            });
             return;
         }
 
@@ -64,11 +66,11 @@ const SignUp = () => {
                         return;
                     }
 
-                    // posthog.identify(emailAddress, {
-                    //     $set: { email: emailAddress },
-                    //     $set_once: { sign_up_date: new Date().toISOString() },
-                    // });
-                    // posthog.capture('user_signed_up', { email: emailAddress });
+                    posthog.identify(emailAddress, {
+                        $set: { email: emailAddress },
+                        $set_once: { sign_up_date: new Date().toISOString() },
+                    });
+                    posthog.capture('user_signed_up', { email: emailAddress });
 
                     const url = decorateUrl('/(tabs)');
                     if (url.startsWith('http')) {
