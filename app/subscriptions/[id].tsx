@@ -1,19 +1,16 @@
 import { Link, useLocalSearchParams } from "expo-router";
 import { useEffect } from 'react';
 import { Text, View } from 'react-native';
+import { posthog } from '@/src/config/posthog';
 
 const SubscriptionDetails = () => { //56:25
-    const { id } = useLocalSearchParams<{ id: string }>(); //figure out which id  56:50 
-    // const posthog = usePostHog();
+    const { id } = useLocalSearchParams<{ id: string }>(); //figure out which id  56:50
 
     useEffect(() => {
-        // Only capture if id is valid
-        // if (id && typeof id === 'string' && id.trim()) {
-        //     posthog.capture('subscription_details_viewed', { subscription_id: id });
-        // }
-    }, [id, 
-        // posthog
-    ]);
+        if (id && typeof id === 'string' && id.trim()) {
+            posthog.capture('subscription_details_viewed', { subscription_id: id });
+        }
+    }, [id]);
 
     return (
         <View>

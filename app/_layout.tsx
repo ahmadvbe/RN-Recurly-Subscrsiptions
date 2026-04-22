@@ -7,6 +7,7 @@ import { tokenCache } from '@clerk/expo/token-cache';
 
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, useGlobalSearchParams, usePathname } from "expo-router";
+import { PostHogProvider } from 'posthog-react-native';
 import { useEffect, useRef } from "react";
 import { posthog } from '../src/config/posthog';
 
@@ -63,6 +64,8 @@ function RootLayoutContent() {
     // and the authLoaded state from useAuth. Once both are true, it calls SplashScreen.hideAsync() to hide the splash screen and show the app content. If either fonts are still loading or auth status is not yet determined, it keeps the splash screen visible by returning null, preventing any part of the app from rendering until everything is ready. This provides a smooth user experience without flashes of unstyled content or premature rendering.
     useEffect(() => {
    
+      // 2:49:20 CodeRabbit fix: Move the Clerk Provider outisde the font gate tom enable parallel loading of fonts and auth
+      //PROMPT WITH JUNIE THE AI AGENT - auth and fonts loads in parallel 
     if (fontsLoaded && authLoaded) { // ===> Hide splash only when both fonts and auth are loaded
       SplashScreen.hideAsync()
     }
@@ -76,19 +79,20 @@ function RootLayoutContent() {
 
 export default function RootLayout() {
   return (
-    // <PostHogProvider
-    //   client={posthog}
-    //   autocapture={{
-    //     captureScreens: false,
-    //     captureTouches: true,
-    //     propsToCapture: ['testID'],
-    //   }}
-    // >
+    //2:55:25 POSTHOG automatic installation using the wizard
+    <PostHogProvider
+      client={posthog}
+      autocapture={{
+        captureScreens: false,
+        captureTouches: true,
+        propsToCapture: ['testID'],
+      }}
+    >
       <ClerkProvider //2:39:10   #### 1-app/_layout.tsx : update root layout with clerk provider 
                                       //wrapping our entire app
             publishableKey={publishableKey} 
             tokenCache={tokenCache}  //==>which uses the expo secure store which encrypts the session token on the device
-            //when a user closes and reopens the app they stays logged in without re authenticating
+                                     //when a user closes and reopens the app they stays logged in without re authenticating
             >
         <RootLayoutContent />
       </ClerkProvider>
